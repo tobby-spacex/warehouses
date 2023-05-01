@@ -4,25 +4,65 @@ namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class WarehouseController extends Controller
 {
+     /**
+     * The warehouse model instance.
+     *
+     * @var \App\Models\Warehouse
+     */
+    protected $warehouse;
+
+     /**
+     * WarehouseController constructor.
+     *
+     * @param Warehouse $warehouse
+     */
+    public function __construct(Warehouse $warehouse)
+    {
+        $this->warehouse = $warehouse;
+    }
+
+     /**
+     * Display a listing of the warehouses.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index() {
-        return view('warehouse.index', [
-            'warehouses' => Warehouse::paginate(2)
+        return view('warehouses.index', [
+            'warehouses' => $this->warehouse->paginate(5)
         ]);
     }
 
-    // Show Warehouse Create Form
-    public function create() {
-        return view('warehouse.create');
+     /**
+     * Display the form for creating a new warehouse.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create(): View {
+        return view('warehouses.create');
     }
 
-    // Show Warehouse Edit Form
-    public function edit(Warehouse $warehouse) {
-        return view('warehouse.edit', ['warehouse' => $warehouse]);
+    /**
+     * Display the form for editing the specified warehouse.
+     *
+     * @param  \App\Models\Warehouse  $warehouse
+     * @return \Illuminate\View\View
+     */
+    public function edit(Warehouse $warehouse): View {
+        return view('warehouses.edit', ['warehouse' => $warehouse]);
     }
 
+
+     /**
+     * Store a new warehouse in the database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request) {
 
         $validatedFormData = $request->validate([
@@ -36,14 +76,21 @@ class WarehouseController extends Controller
             'status'      => ''
         ]);
 
-        Warehouse::create($validatedFormData);
+        $warehouse = $this->warehouse->create($validatedFormData);
         
         session()->flash('success', 'New Warehouse created.');
 
-        return redirect('/');
+        return redirect('/warehouse/' . $warehouse->id . '/manage');
     }
 
-    public function update(Request $request, Warehouse $warehouse) {
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Warehouse  $warehouse
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Warehouse $warehouse): RedirectResponse {
         $validatedFormData = $request->validate([
             'name'        => 'required',
             'address'     => 'required',
@@ -58,6 +105,25 @@ class WarehouseController extends Controller
         $warehouse->update($validatedFormData);
         
         session()->flash('success', 'Updated data');
+
+        return back();
+    }
+
+     /**
+     * Delete a warehouse.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Request $request): RedirectResponse {
+
+        $warehouse = $this->warehouse->find($request->warehouse_id);
+    
+        if ($warehouse) {
+            $warehouse->delete();
+        }
+
+        session()->flash('success', 'Warehouse deleted.');
 
         return back();
     }

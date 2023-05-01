@@ -5,25 +5,64 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
+    /**
+     * The warehouse model instance.
+     *
+     * @var \App\Models\Product
+     */
+    protected $product;
 
-    // Show Product Create Form
+     /**
+     * WarehouseController constructor.
+     *
+     * @param Warehouse $warehouse
+     */
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
+
+     /**
+     * Display the form for creating a new product.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create() {
         return view('products.create');
     }
 
+     /**
+     * Display a listing of the products.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index() {
         return view('products.list', [
-            'products' => Product::paginate(2)
+            'products' => $this->product->paginate(5)
         ]); 
     }
 
+     /**
+     * Display the form for editing the specified product.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\View\View
+     */
     public function edit(Product $product) {
         return view('products.edit', ['product' => $product]);
     }
 
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request) {
         
         $validatedFormData = $request->validate([
@@ -33,14 +72,21 @@ class ProductController extends Controller
             'description' => ''
         ]);
 
-        Product::create($validatedFormData);
+        $product = $this->product->create($validatedFormData);
 
         session()->flash('success', 'New Product created.');
 
-        return redirect('/');
+        return redirect('/product/' . $product->id . '/edit');
     }
 
-    public function update(Request $request, Product $product) {
+     /**
+     * Update the specified product in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Product $product): RedirectResponse {
         
         $validatedFormData = $request->validate([
             'name'        => 'required',
@@ -56,7 +102,13 @@ class ProductController extends Controller
         return back();
     }
 
-    public function destroy(Product $product) {
+     /**
+     * Delete a product.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Product $product): RedirectResponse {
         $product->delete();
 
         return back();

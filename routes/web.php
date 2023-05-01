@@ -17,9 +17,9 @@ use App\Http\Controllers\WarehouseProductController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,10 +32,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/', [WarehouseController::class, 'index']);
+Route::get('/warehouse', [WarehouseController::class, 'index'])->middleware('auth')->name('warehouse');
 Route::get('/warehouse/create', [WarehouseController::class, 'create']);
 Route::post('/warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
 Route::put('/warehouse/{warehouse}', [WarehouseController::class, 'update']);
+Route::delete('/warehouse/{id}', [WarehouseController::class, 'destroy'])->name('warehouse.destroy');
 
 /**
  * WarehouseController
@@ -47,7 +48,7 @@ Route::get('/warehouse/{warehouse}/edit', [WarehouseController::class, 'edit']);
  */
 Route::get('/warehouse/{warehouse}/manage', [WarehouseProductController::class, 'show'])->name('warehouse.manage');
 Route::post('/warehouse/{warehouse}', [WarehouseProductController::class, 'store'])->name('warehouse.product');
-Route::delete('/warehouse/{warehouse}', [WarehouseProductController::class, 'destroy'])->name('warehouse.destroy');
+Route::delete('/warehouse.product/{warehouse}', [WarehouseProductController::class, 'destroy']);
 
 /**
  * ProductController

@@ -15,11 +15,12 @@
             {{$product->description}}
         </td>
         <td class="px-6 py-4 text-center">
-            <a href="/product/{{$product->id}}/edit" class= "font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
             
             <form method="post" action="/product/{{$product->id}}">
                 @csrf
                 @method('DELETE')
+                <a href="/product/{{$product->id}}/edit" class= "p-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+
                 <button type="submit" value="{{$product->id}}" class="p-2 text-rose-600">Delete</button>
             </form>
         </td>
