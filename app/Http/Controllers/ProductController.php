@@ -14,6 +14,16 @@ class ProductController extends Controller
         return view('products.create');
     }
 
+    public function index() {
+        return view('products.list', [
+            'products' => Product::paginate(2)
+        ]); 
+    }
+
+    public function edit(Product $product) {
+        return view('products.edit', ['product' => $product]);
+    }
+
     public function store(Request $request) {
         
         $validatedFormData = $request->validate([
@@ -27,6 +37,28 @@ class ProductController extends Controller
 
         session()->flash('success', 'New Product created.');
 
-        return redirect('/dashboard');
+        return redirect('/');
+    }
+
+    public function update(Request $request, Product $product) {
+        
+        $validatedFormData = $request->validate([
+            'name'        => 'required',
+            'sku'         => ['required', Rule::unique('products', 'sku')],
+            'price'       => 'required',
+            'description' => ''
+        ]);
+
+        $product->update($validatedFormData);
+
+        session()->flash('success', 'Product data updated.');
+
+        return back();
+    }
+
+    public function destroy(Product $product) {
+        $product->delete();
+
+        return back();
     }
 }

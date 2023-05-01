@@ -10,32 +10,31 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Warehouse name
+                                    Name
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Address
+                                    Sku
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Phone
+                                    Price
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Email
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Status
+                                    Description
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
                                     Action
                                 </th>
                             </tr>
                         </thead>
-                        @foreach($warehouses as $warehouse)
-                        <x-warehouses-card :warehouse="$warehouse" />
+                        
+                        @foreach($products as $product)
+                        <x-products-card :product="$product" />
                         @endforeach
+
                     </table>
 
                     <div class="mt-1 p-2">
-                        {{$warehouses->links()}}
+                        {{$products->links()}}
                     </div>
                 </div>
             </div>   
