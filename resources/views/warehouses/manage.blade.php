@@ -19,17 +19,17 @@
                             @endif
                                                         
                             </h3>
-                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Name: {{$warehouse->name}}</p>
+                            <p>Name: <span class="text-base font-normal text-gray-500 dark:text-gray-400">{{$warehouse->name}}</span> </p>
                             
                             <div class="flex">
-                                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Address: {{$warehouse->address}}</p>
+                                <p>Address: <span class="text-base font-normal text-gray-500 dark:text-gray-400">{{$warehouse->address}}</span> </p>
                                 <p class="ml-5 text-base font-normal dark:text-gray-400">City: <span class="text-gray-500 dark:text-gray-400">{{$warehouse->city}}</span></p>
-                                <p class="ml-5 text-base font-normal text-gray-500 dark:text-gray-400">Phone: {{$warehouse->phone}}</p>
-                                <p class="ml-5 text-base font-normal text-gray-500 dark:text-gray-400">Email: {{$warehouse->email}}</p>
+                                <p class="ml-5 ">Phone: <span class="text-base font-normal text-gray-500 dark:text-gray-400">{{$warehouse->phone}}</span> </p>
+                                <p class="ml-5">Email: <span class="text-base font-normal text-gray-500 dark:text-gray-400">{{$warehouse->email}}</span></p>
                             </div>
                        
                             <div>
-                                <label class="text-base font-normal text-gray-500 dark:text-gray-400">Description:</label>
+                                <label class="text-base font-normal dark:text-gray-400">Description:</label>
                                 <p class="text-base font-normal text-gray-500 dark:text-gray-400"> {{$warehouse->description}}</p>
                             </div>
                         </li>
