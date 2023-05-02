@@ -66,14 +66,14 @@ class WarehouseController extends Controller
     public function store(Request $request) {
 
         $validatedFormData = $request->validate([
-            'name'        => 'required',
-            'address'     => 'required',
-            'city'        => '',
-            'phone'       => 'required',
-            'email'       => ['required', 'email'],
-            'country'     => 'required',
-            'description' => '',
-            'status'      => ''
+            'name'        => 'required|string|max:155',
+            'address'     => 'required|string|max:255',
+            'city'        => 'nullable|string|max:155',
+            'phone'       => 'required|string|max:20',
+            'email'       => ['required', 'email', 'max:255'],
+            'country'     => 'required|string|max:155',
+            'description' => 'nullable|string',
+            'status'      => 'nullable|boolean'
         ]);
 
         $warehouse = $this->warehouse->create($validatedFormData);
@@ -92,14 +92,14 @@ class WarehouseController extends Controller
      */
     public function update(Request $request, Warehouse $warehouse): RedirectResponse {
         $validatedFormData = $request->validate([
-            'name'        => 'required',
-            'address'     => 'required',
-            'city'        => '',
-            'phone'       => 'required',
-            'email'       => ['required', 'email'],
-            'country'     => 'required',
-            'description' => '',
-            'status'      => ''
+            'name'        => 'required|string|max:155',
+            'address'     => 'required|string|max:255',
+            'city'        => 'nullable|string|max:155',
+            'phone'       => 'required|string|max:20',
+            'email'       => ['required', 'email', 'max:255'],
+            'country'     => 'required|string|max:155',
+            'description' => 'nullable|string',
+            'status'      => 'nullable|boolean'
         ]);
 
         $warehouse->update($validatedFormData);

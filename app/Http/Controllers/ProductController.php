@@ -66,10 +66,10 @@ class ProductController extends Controller
     public function store(Request $request) {
         
         $validatedFormData = $request->validate([
-            'name'        => 'required',
+            'name'        => 'required|string|max:155',
             'sku'         => ['required', Rule::unique('products', 'sku')],
-            'price'       => 'required',
-            'description' => ''
+            'price'       => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'description' => 'nullable|string'
         ]);
 
         $product = $this->product->create($validatedFormData);
@@ -89,10 +89,10 @@ class ProductController extends Controller
     public function update(Request $request, Product $product): RedirectResponse {
         
         $validatedFormData = $request->validate([
-            'name'        => 'required',
-            'sku'         => ['required', Rule::unique('products', 'sku')],
-            'price'       => 'required',
-            'description' => ''
+            'name'        => 'required|string|max:155',
+            'sku'         => 'required|string|max:255',
+            'price'       => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'description' => 'nullable|string'
         ]);
 
         $product->update($validatedFormData);

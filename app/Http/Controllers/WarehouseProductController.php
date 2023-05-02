@@ -58,9 +58,9 @@ class WarehouseProductController extends Controller
     public function store(Request $request, Warehouse $warehouse): RedirectResponse {
   
         $validateFormData = $request->validate([
-            'warehouse_id' => 'required',
+            'warehouse_id' => 'required|numeric',
             'product_ids'  => ['required', new UniqueWarehouseProduct($request->input('warehouse_id'))],
-            'quantity'     => 'required'
+            'quantity'     => 'required|numeric'
         ]);
 
         foreach($validateFormData['product_ids'] as $productId) {
