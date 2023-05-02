@@ -37,3 +37,9 @@ The application is a Warehouse management system where you can create a warehous
 4. check `http://localhost:8000/`
 
 5. the project uses TailwindCSS, make sure that styles are compiled
+
+
+### a demo video of the application can be viewed with this link:
+
+  `https://www.awesomescreenshot.com/video/17006591?key=5a79b1dc6f8792f7a7d3881c97a43c32`
+   
