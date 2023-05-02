@@ -1,13 +1,15 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @vite('resources/css/app.css')
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hey, wellcome to warehouse app
-  </h1>
-</body>
-</html>
+<x-app-layout>
+  @include('partials._navbar')
+    
+  <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+              <div class="p-6 text-gray-900 text-center">
+                <span class="font-bold uppercase">
+                  {{auth()->user()->name}}, this is a warehouse management system.
+                </span>
+              </div>
+          </div>
+      </div>
+  </div>
+</x-app-layout>
